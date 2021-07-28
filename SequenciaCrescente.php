@@ -38,11 +38,17 @@ function SequenciaCrescente($array)
 {
     $countErrors = 0;
 
-    foreach($array as $key => $atual){
-        $nextKey = $key+1;
-        if(isset($array[$nextKey]) && $atual >= $array[$nextKey]){
+    $key_error = verificaSequencia($array);
+    if($key_error !== null){
+        $countErrors++;
+        $temp = $array;
+        array_splice($temp, $key_error, 1);
+        $error1 = verificaSequencia($temp);
+        $temp = $array;
+        array_splice($temp, $key_error+1, 1);
+        $error2 = verificaSequencia($temp);
+        if($error1 !== false && $error2 !== false){
             $countErrors++;
-            continue;
         }
     }
 
@@ -50,7 +56,17 @@ function SequenciaCrescente($array)
         return false;
     }
     return true;
+}
 
+function verificaSequencia($array){
+    foreach($array as $key => $atual){
+        $nextKey = $key+1;
+        if(isset($array[$nextKey]) && $atual >= $array[$nextKey]){
+            return $key;
+            break;
+        }
+    }
+    return false;
 }
 
 ?>
