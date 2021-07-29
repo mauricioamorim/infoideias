@@ -36,11 +36,10 @@
  */
 function SequenciaCrescente($array)
 {
-    $countErrors = 0;
+    $is_valid = true;
 
     $key_error = verificaSequencia($array);
     if($key_error !== null){
-        $countErrors++;
         $temp = $array;
         array_splice($temp, $key_error, 1);
         $error1 = verificaSequencia($temp);
@@ -48,14 +47,11 @@ function SequenciaCrescente($array)
         array_splice($temp, $key_error+1, 1);
         $error2 = verificaSequencia($temp);
         if($error1 !== false && $error2 !== false){
-            $countErrors++;
+            $is_valid = false;
         }
     }
 
-    if($countErrors > 1){
-        return false;
-    }
-    return true;
+    return $is_valid;
 }
 
 function verificaSequencia($array){
